@@ -1,3 +1,26 @@
+#nous allons definir ici les routes de notre applications
 oc_platform_homepage:
-    path:     /
-    defaults: { _controller: OCPlatformBundle:Default:index }
+    path:     /{page}
+    defaults: { _controller: OCPlatformBundle:Advert:index, page: 1 }
+
+oc_platform_add:
+    path:     /platform/advert/add
+    defaults: { _controller: OCPlatformBundle:Advert:add }
+
+oc_platform_view:
+    path:     /platform/view/{id}
+    defaults: { _controller: OCPlatformBundle:Advert:view }
+    requirements:
+        id: \d+
+
+oc_platform_edit:
+    path:     /platform/edit/{id}
+    defaults: { _controller: OCPlatformBundle:Advert:edit}
+    requirements:
+        id: \d+
+
+oc_platform_remove:
+    path:     /platform/remove/{id}
+    defaults: { _controller: OCPlatformBundle:Advert:remove}
+    requirements:
+        id: \d+
