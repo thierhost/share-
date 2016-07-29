@@ -7,6 +7,9 @@
  */
 namespace OC\PlatformBundle\Controller;
 use OC\PlatformBundle\Entity\Advert;
+use OC\PlatformBundle\Entity\Application;
+use OC\PlatformBundle\Entity\Category;
+use OC\PlatformBundle\Entity\Image;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,17 +32,42 @@ class AdvertController extends Controller{
     }
     
     public function addAction(Request $request){
-        // pour crrer on recupere le entity manager
+
         $em = $this->getDoctrine()->getManager();
+        // creation de l'image
+        $image = new Image();
+        $image->setAlt("Hellooo toto");
+        $image->setUrl("image.png");
+        // creation de la categorie
+        $categorie = new Category();
+        $categorie->setName("walllaaa demba serrr");
         $advert = new Advert();
         $advert->setAuthor("Thierno ");
         $advert->setContent("bal bala balaa blaa ");
         $advert->setDate(new \DateTime());
         $advert->setTitle("Demba sarr");
+        $advert->setImage($image);
+        $advert->addCategory($categorie);
+        // creation d'application pour l'annonce
+        $application = new Application();
+        $application->setDate(new \DateTime());
+        $application->setContent("Bla blaa je fou rien hannaa nexx lol");
+        $application->setAuthor("Demba Sarr");
+        $application->setAdvert($advert);
+
+        $application1 = new Application();
+        $application1->setDate(new \DateTime());
+        $application1->setContent("Bla blaa je fou rien hannaa nexx lol");
+        $application1->setAuthor("Demba Sarr");
+        $application1->setAdvert($advert);
+
         $em->persist($advert);
+        $em->persist($application);
+        $em->persist($application1);
         $em->flush();
+
         return $this->render("OCPlatformBundle:Advert:view.html.twig",array(
-           'id'=>$advert->getId(),
+           'advert'=>$advert
         ));
     }
     
